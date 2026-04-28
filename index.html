@@ -15,81 +15,82 @@ body {
   background: #ededed;
 }
 
+/* HEADER */
 header {
+  background: #feed3d;
+  padding: 15px;
   text-align: center;
-  padding: 20px;
-  background: white;
 }
 
 header img {
-  width: 180px;
+  width: 160px;
 }
 
-h1 {
-  font-family: 'Anton', sans-serif;
-  color: #818286;
-  margin: 10px 0 0;
-}
-
+/* GRID */
 .container {
-  max-width: 600px;
-  margin: 20px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-}
-
-.equipamento {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  border-bottom: 1px solid #ededed;
-  padding-bottom: 10px;
-}
-
-.equipamento img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.equipamento span {
-  flex: 1;
-  margin-left: 10px;
-}
-
-input[type="number"] {
-  width: 60px;
-}
-
-button {
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
   padding: 15px;
-  background: #feed3d;
+}
+
+/* CARD */
+.card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.card h3 {
+  font-size: 14px;
+  padding: 5px;
+}
+
+.card input {
+  width: 60px;
+  margin-bottom: 5px;
+}
+
+.card button {
+  background: #fbc304;
   border: none;
-  color: black;
+  padding: 8px;
+  width: 100%;
+  cursor: pointer;
   font-weight: bold;
+}
+
+.card button:hover {
+  background: #feed3d;
+}
+
+/* CARRINHO */
+.carrinho {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #818286;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+.carrinho button {
+  background: #25D366;
+  border: none;
+  padding: 12px;
+  width: 90%;
+  color: white;
   font-size: 16px;
   border-radius: 8px;
-  margin-top: 20px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #fbc304;
-}
-
-.whatsapp {
-  position: fixed;
-  bottom: 15px;
-  right: 15px;
-  background: #25D366;
-  color: white;
-  padding: 12px;
-  border-radius: 50px;
-  text-decoration: none;
 }
 </style>
 </head>
@@ -97,106 +98,74 @@ button:hover {
 <body>
 
 <header>
-  <img src="images/logo.png" alt="Construloc">
+  <img src="images/logo.png">
 </header>
 
-<div class="container">
+<div class="container" id="produtos"></div>
 
-<h2>Escolha os equipamentos</h2>
-
-<!-- MODELO DE ITEM -->
-<div class="equipamento">
-  <img src="https://via.placeholder.com/60">
-  <span>Martelete 30kg</span>
-  <input type="number" id="martelete">
+<div class="carrinho">
+  <div id="resumo">Nenhum item selecionado</div>
+  <input type="number" id="dias" placeholder="Quantidade de dias">
+  <br><br>
+  <button onclick="finalizar()">Finalizar no WhatsApp</button>
 </div>
-
-<div class="equipamento">
-  <img src="https://via.placeholder.com/60">
-  <span>Escora</span>
-  <input type="number" id="escora">
-</div>
-
-<div class="equipamento">
-  <img src="https://via.placeholder.com/60">
-  <span>Andaime</span>
-  <input type="number" id="andaime">
-</div>
-
-<div class="equipamento">
-  <img src="https://via.placeholder.com/60">
-  <span>Betoneira</span>
-  <input type="number" id="betoneira">
-</div>
-
-<div class="equipamento">
-  <img src="https://via.placeholder.com/60">
-  <span>Compactador de solo</span>
-  <input type="number" id="compactador">
-</div>
-
-<div class="equipamento">
-  <img src="https://via.placeholder.com/60">
-  <span>Lixadeira e politriz</span>
-  <input type="number" id="lixadeira">
-</div>
-
-<div class="equipamento">
-  <img src="https://via.placeholder.com/60">
-  <span>Lavadora de alta pressão</span>
-  <input type="number" id="lavadora">
-</div>
-
-<div class="equipamento">
-  <img src="https://via.placeholder.com/60">
-  <span>Aparador de grama</span>
-  <input type="number" id="aparador">
-</div>
-
-<div class="equipamento">
-  <img src="https://via.placeholder.com/60">
-  <span>Bomba de água</span>
-  <input type="number" id="bomba">
-</div>
-
-<div class="equipamento">
-  <img src="https://via.placeholder.com/60">
-  <span>Pistola elétrica para pintura</span>
-  <input type="number" id="pistola">
-</div>
-
-<button onclick="enviarWhats()">Solicitar Orçamento</button>
-
-</div>
-
-<a class="whatsapp" href="https://wa.me/message/WKSBFVAUVKUZI1" target="_blank">
-  WhatsApp
-</a>
 
 <script>
-function enviarWhats() {
+let produtos = [
+  {nome:"Martelete 30kg", id:"martelete", img:"https://via.placeholder.com/200"},
+  {nome:"Escora", id:"escora", img:"https://via.placeholder.com/200"},
+  {nome:"Andaime", id:"andaime", img:"https://via.placeholder.com/200"},
+  {nome:"Betoneira", id:"betoneira", img:"https://via.placeholder.com/200"},
+  {nome:"Compactador de solo", id:"compactador", img:"https://via.placeholder.com/200"},
+  {nome:"Lixadeira e politriz", id:"lixadeira", img:"https://via.placeholder.com/200"},
+  {nome:"Lavadora de alta pressão", id:"lavadora", img:"https://via.placeholder.com/200"},
+  {nome:"Aparador de grama", id:"aparador", img:"https://via.placeholder.com/200"},
+  {nome:"Bomba de água", id:"bomba", img:"https://via.placeholder.com/200"},
+  {nome:"Pistola elétrica", id:"pistola", img:"https://via.placeholder.com/200"}
+];
 
-  let msg = "Olá! Vim pelo site da Construloc Nordeste.%0A%0A";
+let carrinho = {};
 
-  function add(nome, id){
-    let valor = document.getElementById(id).value;
-    if(valor > 0){
-      msg += nome + ": " + valor + "%0A";
-    }
+let container = document.getElementById("produtos");
+
+produtos.forEach(p => {
+  container.innerHTML += `
+    <div class="card">
+      <img src="${p.img}">
+      <h3>${p.nome}</h3>
+      <input type="number" min="1" placeholder="Qtd" id="${p.id}">
+      <button onclick="add('${p.id}','${p.nome}')">Adicionar</button>
+    </div>
+  `;
+});
+
+function add(id, nome){
+  let qtd = document.getElementById(id).value;
+  if(qtd > 0){
+    carrinho[nome] = qtd;
+  }
+  atualizar();
+}
+
+function atualizar(){
+  let texto = "";
+  for(let item in carrinho){
+    texto += item + " (" + carrinho[item] + ") | ";
+  }
+  document.getElementById("resumo").innerText = texto || "Nenhum item selecionado";
+}
+
+function finalizar(){
+  let dias = document.getElementById("dias").value;
+  let msg = "Olá! Vim pelo site.%0A%0A";
+
+  for(let item in carrinho){
+    msg += item + ": " + carrinho[item] + "%0A";
   }
 
-  add("Martelete 30kg", "martelete");
-  add("Escora", "escora");
-  add("Andaime", "andaime");
-  add("Betoneira", "betoneira");
-  add("Compactador de solo", "compactador");
-  add("Lixadeira e politriz", "lixadeira");
-  add("Lavadora de alta pressão", "lavadora");
-  add("Aparador de grama", "aparador");
-  add("Bomba de água", "bomba");
-  add("Pistola elétrica", "pistola");
+  msg += "%0ADias: " + dias;
 
-  let url = "https://wa.me/5584999999999?text=" + msg;
+  let url = "https://wa.me/message/WKSBFVAUVKUZI1?text=" + msg;
 
   window.open(url, "_blank");
 }
