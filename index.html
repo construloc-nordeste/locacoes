@@ -51,16 +51,19 @@ header img {
   transform: scale(1.02);
 }
 
-/* IMAGEM AJUSTADA */
+
 .card img {
   width: 100%;
   height: 160px;
-  object-fit: contain; /* 🔥 não corta mais */
+  object-fit: contain;
   background: #fff;
+
+  display: block;
+  margin: 0 auto;
   padding: 10px;
+  box-sizing: border-box; /* 🔥 corrige cálculo do padding */
 }
 
-/* CONTEÚDO */
 .info {
   padding: 10px;
   text-align: center;
