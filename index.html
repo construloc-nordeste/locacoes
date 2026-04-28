@@ -32,40 +32,51 @@ header img {
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 15px;
   padding: 15px;
+  padding-bottom: 160px; /* 🔥 CORREÇÃO DO PROBLEMA */
 }
 
 /* CARD */
 .card {
   background: white;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   text-align: center;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.02);
 }
 
 .card img {
   width: 100%;
-  height: 140px;
+  height: 150px;
   object-fit: cover;
 }
 
 .card h3 {
   font-size: 14px;
-  padding: 5px;
+  padding: 8px;
+  color: #333;
 }
 
 .card input {
   width: 60px;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
 .card button {
   background: #fbc304;
   border: none;
-  padding: 8px;
+  padding: 10px;
   width: 100%;
   cursor: pointer;
   font-weight: bold;
+  border-radius: 0 0 12px 12px;
 }
 
 .card button:hover {
@@ -81,6 +92,15 @@ header img {
   color: white;
   padding: 15px;
   text-align: center;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+}
+
+.carrinho input {
+  width: 80%;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  margin-top: 8px;
 }
 
 .carrinho button {
@@ -91,6 +111,18 @@ header img {
   color: white;
   font-size: 16px;
   border-radius: 8px;
+  margin-top: 10px;
+}
+
+/* MOBILE MELHORADO */
+@media (max-width: 600px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card img {
+    height: 120px;
+  }
 }
 </style>
 </head>
@@ -98,30 +130,32 @@ header img {
 <body>
 
 <header>
-  <img src="logo.png">
+  <img src="images/logo.png">
 </header>
 
 <div class="container" id="produtos"></div>
 
 <div class="carrinho">
   <div id="resumo">Nenhum item selecionado</div>
-  <input type="number" id="dias" placeholder="Quantidade de dias">
-  <br><br>
+
+  <div style="margin-top:8px;">Quantidade de dias</div>
+  <input type="number" id="dias" placeholder="Ex: 3">
+
   <button onclick="finalizar()">Finalizar no WhatsApp</button>
 </div>
 
 <script>
 let produtos = [
-  {nome:"Martelete 30kg", id:"martelete", img:"https://via.placeholder.com/200"},
-  {nome:"Escora", id:"escora", img:"https://via.placeholder.com/200"},
-  {nome:"Andaime", id:"andaime", img:"https://via.placeholder.com/200"},
-  {nome:"Betoneira", id:"betoneira", img:"https://via.placeholder.com/200"},
-  {nome:"Compactador de solo", id:"compactador", img:"https://via.placeholder.com/200"},
-  {nome:"Lixadeira e politriz", id:"lixadeira", img:"https://via.placeholder.com/200"},
-  {nome:"Lavadora de alta pressão", id:"lavadora", img:"https://via.placeholder.com/200"},
-  {nome:"Aparador de grama", id:"aparador", img:"https://via.placeholder.com/200"},
-  {nome:"Bomba de água", id:"bomba", img:"https://via.placeholder.com/200"},
-  {nome:"Pistola elétrica", id:"pistola", img:"https://via.placeholder.com/200"}
+  {nome:"Martelete 30kg", id:"martelete", img:"https://via.placeholder.com/300"},
+  {nome:"Escora", id:"escora", img:"https://via.placeholder.com/300"},
+  {nome:"Andaime", id:"andaime", img:"https://via.placeholder.com/300"},
+  {nome:"Betoneira", id:"betoneira", img:"https://via.placeholder.com/300"},
+  {nome:"Compactador de solo", id:"compactador", img:"https://via.placeholder.com/300"},
+  {nome:"Lixadeira e politriz", id:"lixadeira", img:"https://via.placeholder.com/300"},
+  {nome:"Lavadora de alta pressão", id:"lavadora", img:"https://via.placeholder.com/300"},
+  {nome:"Aparador de grama", id:"aparador", img:"https://via.placeholder.com/300"},
+  {nome:"Bomba de água", id:"bomba", img:"https://via.placeholder.com/300"},
+  {nome:"Pistola elétrica", id:"pistola", img:"https://via.placeholder.com/300"}
 ];
 
 let carrinho = {};
@@ -157,7 +191,7 @@ function atualizar(){
 
 function finalizar(){
   let dias = document.getElementById("dias").value;
-  let msg = "Olá! Vim pelo site.%0A%0A";
+  let msg = "Olá! Vim pelo site da Construloc.%0A%0A";
 
   for(let item in carrinho){
     msg += item + ": " + carrinho[item] + "%0A";
