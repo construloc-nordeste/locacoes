@@ -15,7 +15,6 @@ body {
   background: #ededed;
 }
 
-/* HEADER */
 header {
   background: #feed3d;
   padding: 15px;
@@ -26,7 +25,6 @@ header img {
   width: 160px;
 }
 
-/* GRID */
 .container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -35,7 +33,6 @@ header img {
   padding-bottom: 35vh;
 }
 
-/* CARD */
 .card {
   background: white;
   border-radius: 12px;
@@ -56,8 +53,6 @@ header img {
   height: 160px;
   object-fit: contain;
   background: #fff;
-  display: block;
-  margin: 0 auto;
   padding: 10px;
   box-sizing: border-box;
 }
@@ -90,14 +85,12 @@ header img {
   width: 100%;
   cursor: pointer;
   font-weight: bold;
-  border-radius: 0 0 12px 12px;
 }
 
 .card button:hover {
   background: #feed3d;
 }
 
-/* CARRINHO */
 .carrinho {
   position: fixed;
   bottom: 0;
@@ -106,7 +99,6 @@ header img {
   color: white;
   padding: 15px;
   text-align: center;
-  box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
 }
 
 .carrinho input {
@@ -126,16 +118,6 @@ header img {
   font-size: 16px;
   border-radius: 8px;
   margin-top: 10px;
-}
-
-@media (max-width: 600px) {
-  .container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .card img {
-    height: 130px;
-  }
 }
 </style>
 </head>
@@ -189,28 +171,47 @@ produtos.forEach(p => {
 });
 
 function add(id, nome){
-  let qtd = document.getElementById(id).value;
-  if(qtd > 0){
-    carrinho[nome] = qtd;
+  let input = document.getElementById(id);
+  let qtd = parseInt(input.value);
+
+  if(isNaN(qtd) || qtd <= 0){
+    alert("Digite uma quantidade válida");
+    return;
   }
+
+  carrinho[nome] = qtd;
   atualizar();
 }
 
 function atualizar(){
   let texto = "";
   for(let item in carrinho){
-    texto += item + " (" + carrinho[item] + ") | ";
+    texto += "• " + item + " (" + carrinho[item] + ")\n";
   }
+
   document.getElementById("resumo").innerText = texto || "Nenhum item selecionado";
 }
 
 function finalizar(){
   let dias = document.getElementById("dias").value;
 
+  if(!dias || dias <= 0){
+    alert("Digite a quantidade de dias");
+    return;
+  }
+
   let msg = "Olá! Vim pelo site da Construloc.\n\n";
 
+  let temItem = false;
+
   for(let item in carrinho){
-    msg += item + ": " + carrinho[item] + "\n";
+    msg += "• " + item + ": " + carrinho[item] + "\n";
+    temItem = true;
+  }
+
+  if(!temItem){
+    alert("Adicione pelo menos um item no carrinho");
+    return;
   }
 
   msg += "\nDias: " + dias;
