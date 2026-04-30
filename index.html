@@ -32,6 +32,7 @@ header img {
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 15px;
   padding: 15px;
+  padding-bottom: 120px;
 }
 
 /* CARD */
@@ -42,7 +43,6 @@ header img {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .card img {
@@ -78,19 +78,35 @@ header img {
   cursor: pointer;
 }
 
-/* BOTÃO FLUTUANTE */
+/* BOTÃO CARRINHO */
 .btn-carrinho {
   position: fixed;
-  bottom: 20px;
+  bottom: 30px;
   right: 20px;
   background: #25D366;
   color: white;
-  padding: 14px 18px;
-  border-radius: 30px;
-  font-weight: bold;
+  padding: 14px;
+  border-radius: 50%;
+  font-size: 20px;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   z-index: 999;
+}
+
+/* CONTADOR */
+#contador {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
 }
 
 /* CARRINHO */
@@ -129,6 +145,15 @@ header img {
   border-radius: 8px;
   margin-top: 10px;
 }
+
+/* BOTÃO FECHAR */
+.fechar {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 22px;
+  cursor: pointer;
+}
 </style>
 </head>
 
@@ -142,11 +167,14 @@ header img {
 
 <!-- BOTÃO -->
 <div class="btn-carrinho" onclick="toggleCarrinho()">
-  🛒 Ver pedido
+  🛒
+  <span id="contador">0</span>
 </div>
 
 <!-- CARRINHO -->
 <div class="carrinho" id="carrinhoBox">
+  <div class="fechar" onclick="toggleCarrinho()">✕</div>
+
   <div id="resumo">Nenhum item selecionado</div>
 
   <div style="margin-top:8px;">Quantidade de dias</div>
@@ -200,11 +228,23 @@ function add(id, nome){
 
 function atualizar(){
   let texto = "";
+  let totalItens = 0;
+
   for(let item in carrinho){
     texto += "• " + item + " (" + carrinho[item] + ")\n";
+    totalItens += parseInt(carrinho[item]);
   }
 
   document.getElementById("resumo").innerText = texto || "Nenhum item selecionado";
+
+  let contador = document.getElementById("contador");
+
+  if(totalItens > 0){
+    contador.style.display = "flex";
+    contador.innerText = totalItens;
+  } else {
+    contador.style.display = "none";
+  }
 }
 
 function toggleCarrinho(){
