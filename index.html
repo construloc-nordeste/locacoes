@@ -15,6 +15,7 @@ body {
   background: #ededed;
 }
 
+/* HEADER */
 header {
   background: #feed3d;
   padding: 15px;
@@ -25,14 +26,15 @@ header img {
   width: 160px;
 }
 
+/* GRID */
 .container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 15px;
   padding: 15px;
-  padding-bottom: 35vh;
 }
 
+/* CARD */
 .card {
   background: white;
   border-radius: 12px;
@@ -41,20 +43,13 @@ header img {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: 0.2s;
-}
-
-.card:hover {
-  transform: scale(1.02);
 }
 
 .card img {
   width: 100%;
   height: 160px;
   object-fit: contain;
-  background: #fff;
   padding: 10px;
-  box-sizing: border-box;
 }
 
 .info {
@@ -65,10 +60,6 @@ header img {
 .card h3 {
   font-size: 14px;
   margin-bottom: 8px;
-  min-height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .card input {
@@ -83,22 +74,41 @@ header img {
   border: none;
   padding: 12px;
   width: 100%;
-  cursor: pointer;
   font-weight: bold;
+  cursor: pointer;
 }
 
-.card button:hover {
-  background: #feed3d;
+/* BOTÃO FLUTUANTE */
+.btn-carrinho {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  color: white;
+  padding: 14px 18px;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 999;
 }
 
+/* CARRINHO */
 .carrinho {
   position: fixed;
-  bottom: 0;
+  bottom: -100%;
+  left: 0;
   width: 100%;
   background: #818286;
   color: white;
-  padding: 15px;
+  padding: 20px;
   text-align: center;
+  transition: 0.3s;
+  z-index: 998;
+}
+
+.carrinho.ativo {
+  bottom: 0;
 }
 
 .carrinho input {
@@ -130,7 +140,13 @@ header img {
 
 <div class="container" id="produtos"></div>
 
-<div class="carrinho">
+<!-- BOTÃO -->
+<div class="btn-carrinho" onclick="toggleCarrinho()">
+  🛒 Ver pedido
+</div>
+
+<!-- CARRINHO -->
+<div class="carrinho" id="carrinhoBox">
   <div id="resumo">Nenhum item selecionado</div>
 
   <div style="margin-top:8px;">Quantidade de dias</div>
@@ -154,7 +170,6 @@ let produtos = [
 ];
 
 let carrinho = {};
-
 let container = document.getElementById("produtos");
 
 produtos.forEach(p => {
@@ -192,6 +207,11 @@ function atualizar(){
   document.getElementById("resumo").innerText = texto || "Nenhum item selecionado";
 }
 
+function toggleCarrinho(){
+  let box = document.getElementById("carrinhoBox");
+  box.classList.toggle("ativo");
+}
+
 function finalizar(){
   let dias = document.getElementById("dias").value;
 
@@ -201,7 +221,6 @@ function finalizar(){
   }
 
   let msg = "Olá! Vim pelo site da Construloc.\n\n";
-
   let temItem = false;
 
   for(let item in carrinho){
@@ -210,7 +229,7 @@ function finalizar(){
   }
 
   if(!temItem){
-    alert("Adicione pelo menos um item no carrinho");
+    alert("Adicione pelo menos um item");
     return;
   }
 
