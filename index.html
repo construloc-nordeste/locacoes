@@ -61,9 +61,10 @@ header img {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center; /* 🔥 CENTRALIZA EIXO X */
 }
 
-/* TÍTULO PADRONIZADO */
+/* TÍTULO */
 .card h3 {
   font-size: 14px;
   margin-bottom: 8px;
@@ -80,6 +81,7 @@ header img {
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 6px;
+  text-align: center; /* 🔥 CENTRALIZA TEXTO DO INPUT */
 }
 
 /* BOTÃO CARD */
@@ -153,7 +155,7 @@ header img {
   position: relative;
 }
 
-/* X CORRIGIDO (SIMÉTRICO DIREITA) */
+/* X */
 .fechar {
   position: absolute;
   right: 10px;
@@ -163,6 +165,12 @@ header img {
   cursor: pointer;
   padding: 8px;
   line-height: 1;
+}
+
+/* 🔥 RESUMO CENTRALIZADO */
+#resumo {
+  text-align: center;
+  white-space: pre-line;
 }
 
 /* INPUT CARRINHO */
