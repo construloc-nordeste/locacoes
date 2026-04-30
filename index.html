@@ -43,9 +43,9 @@ header img {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
+/* IMAGEM */
 .card img {
   width: 100%;
   height: 160px;
@@ -53,16 +53,28 @@ header img {
   padding: 10px;
 }
 
+/* INFO */
 .info {
   padding: 10px;
   text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+/* TÍTULO PADRONIZADO */
 .card h3 {
   font-size: 14px;
   margin-bottom: 8px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
+/* INPUT */
 .card input {
   width: 60px;
   padding: 5px;
@@ -70,6 +82,7 @@ header img {
   border-radius: 6px;
 }
 
+/* BOTÃO CARD */
 .card button {
   background: #fbc304;
   border: none;
@@ -140,18 +153,19 @@ header img {
   position: relative;
 }
 
-/* X MAIS PRA ESQUERDA (CORRIGIDO) */
+/* X CORRIGIDO (SIMÉTRICO DIREITA) */
 .fechar {
   position: absolute;
-  left: 10px;
-  top: 8px;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 28px;
   cursor: pointer;
   padding: 8px;
   line-height: 1;
 }
 
-/* INPUT */
+/* INPUT CARRINHO */
 .carrinho input {
   width: 80%;
   padding: 8px;
@@ -160,6 +174,7 @@ header img {
   margin-top: 8px;
 }
 
+/* BOTÃO FINALIZAR */
 .carrinho button {
   background: #fbc304;
   border: none;
