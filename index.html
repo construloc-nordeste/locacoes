@@ -60,8 +60,8 @@ header img {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
-  align-items: center; /* 🔥 CENTRALIZA EIXO X */
 }
 
 /* TÍTULO */
@@ -75,13 +75,26 @@ header img {
   text-align: center;
 }
 
-/* INPUT */
-.card input {
-  width: 60px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  text-align: center; /* 🔥 CENTRALIZA TEXTO DO INPUT */
+/* CONTADOR + - */
+.qtd {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qtd button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: #fbc304;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.qtd span {
+  min-width: 20px;
+  text-align: center;
 }
 
 /* BOTÃO CARD */
@@ -138,6 +151,10 @@ header img {
   text-align: center;
   transition: 0.3s;
   z-index: 998;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 🔥 CENTRALIZA TUDO NO EIXO X */
 }
 
 .carrinho.ativo {
@@ -149,10 +166,9 @@ header img {
   font-weight: bold;
   font-size: 18px;
   margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
+  width: 100%;
+  text-align: center;
 }
 
 /* X */
@@ -163,17 +179,16 @@ header img {
   transform: translateY(-50%);
   font-size: 28px;
   cursor: pointer;
-  padding: 8px;
-  line-height: 1;
 }
 
-/* 🔥 RESUMO CENTRALIZADO */
+/* RESUMO CENTRALIZADO */
 #resumo {
   text-align: center;
   white-space: pre-line;
+  margin-bottom: 10px;
 }
 
-/* INPUT CARRINHO */
+/* DIAS */
 .carrinho input {
   width: 80%;
   padding: 8px;
@@ -204,13 +219,11 @@ header img {
 
 <div class="container" id="produtos"></div>
 
-<!-- BOTÃO CARRINHO -->
 <div class="btn-carrinho" onclick="toggleCarrinho()">
   🛒
   <span id="contador">0</span>
 </div>
 
-<!-- CARRINHO -->
 <div class="carrinho" id="carrinhoBox">
 
   <div class="topo-carrinho">
@@ -231,62 +244,75 @@ let produtos = [
   {nome:"Martelete 30kg", id:"martelete", img:"Martelete 30kg.png"},
   {nome:"Escora", id:"escora", img:"Escora.png"},
   {nome:"Andaime", id:"andaime", img:"Andaime.png"},
-  {nome:"Betoneira", id:"betoneira", img:"Betoneira.png"},
-  {nome:"Compactador de solo", id:"compactador", img:"Compactador de solo.png"},
-  {nome:"Lixadeira e politriz", id:"lixadeira", img:"Lixadeira e politriz.png"},
-  {nome:"Lavadora de alta pressão", id:"lavadora", img:"Lavadora de alta pressão.png"},
-  {nome:"Aparador de grama", id:"aparador", img:"Aparador de grama.png"},
-  {nome:"Bomba de água", id:"bomba", img:"Bomba de água.png"},
-  {nome:"Pistola elétrica", id:"pistola", img:"Pistola elétrica.png"}
+  {nome:"Betoneira", id:"betoneira", img:"Betoneira.png"}
 ];
 
 let carrinho = {};
+let qtds = {};
+
 let container = document.getElementById("produtos");
 
 produtos.forEach(p => {
+  qtds[p.id] = 0;
+
   container.innerHTML += `
     <div class="card">
       <img src="${p.img}">
       <div class="info">
         <h3>${p.nome}</h3>
-        <input type="number" min="1" placeholder="Qtd" id="${p.id}">
+
+        <div class="qtd">
+          <button onclick="menos('${p.id}')">−</button>
+          <span id="qtd-${p.id}">0</span>
+          <button onclick="mais('${p.id}')">+</button>
+        </div>
       </div>
+
       <button onclick="add('${p.id}','${p.nome}')">Adicionar</button>
     </div>
   `;
 });
 
-function add(id, nome){
-  let input = document.getElementById(id);
-  let qtd = parseInt(input.value);
+function mais(id){
+  qtds[id]++;
+  document.getElementById("qtd-" + id).innerText = qtds[id];
+}
 
-  if(isNaN(qtd) || qtd <= 0){
-    alert("Digite uma quantidade válida");
+function menos(id){
+  if(qtds[id] > 0){
+    qtds[id]--;
+    document.getElementById("qtd-" + id).innerText = qtds[id];
+  }
+}
+
+function add(id, nome){
+  if(qtds[id] <= 0){
+    alert("Adicione quantidade");
     return;
   }
 
-  carrinho[nome] = qtd;
+  carrinho[nome] = qtds[id];
   atualizar();
 }
 
 function atualizar(){
   let texto = "";
-  let totalItens = 0;
+  let total = 0;
 
   for(let item in carrinho){
     texto += "• " + item + " (" + carrinho[item] + ")\n";
-    totalItens += parseInt(carrinho[item]);
+    total += carrinho[item];
   }
 
   document.getElementById("resumo").innerText = texto || "Nenhum item selecionado";
 
-  let contador = document.getElementById("contador");
+  let c = document.getElementById("contador");
 
-  if(totalItens > 0){
-    contador.style.display = "flex";
-    contador.innerText = totalItens;
+  if(total > 0){
+    c.style.display = "flex";
+    c.innerText = total;
   } else {
-    contador.style.display = "none";
+    c.style.display = "none";
   }
 }
 
@@ -296,39 +322,33 @@ function toggleCarrinho(){
 
   box.classList.toggle("ativo");
 
-  if(box.classList.contains("ativo")){
-    btn.style.display = "none";
-  } else {
-    btn.style.display = "flex";
-  }
+  btn.style.display = box.classList.contains("ativo") ? "none" : "flex";
 }
 
 function finalizar(){
   let dias = document.getElementById("dias").value;
 
-  if(!dias || dias <= 0){
-    alert("Digite a quantidade de dias");
+  if(!dias){
+    alert("Digite os dias");
     return;
   }
 
-  let msg = "Olá! Vim pelo site da Construloc.\n\n";
-  let temItem = false;
+  let msg = "Olá! Vim pelo site.\n\n";
+  let tem = false;
 
   for(let item in carrinho){
     msg += "• " + item + ": " + carrinho[item] + "\n";
-    temItem = true;
+    tem = true;
   }
 
-  if(!temItem){
-    alert("Adicione pelo menos um item");
+  if(!tem){
+    alert("Carrinho vazio");
     return;
   }
 
   msg += "\nDias: " + dias;
 
-  let numero = "558497099908";
-  let url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(msg);
-
+  let url = "https://wa.me/558497099908?text=" + encodeURIComponent(msg);
   window.open(url, "_blank");
 }
 </script>
