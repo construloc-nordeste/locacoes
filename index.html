@@ -9,6 +9,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -74,9 +79,11 @@ header img {
 .qtd {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
 }
 
+/* 🔥 VOLTOU PRO TAMANHO ORIGINAL */
 .qtd button {
   width: 28px;
   height: 28px;
@@ -85,6 +92,10 @@ header img {
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .qtd span {
@@ -160,13 +171,14 @@ header img {
   min-height: 50%;
   background: #818286;
   color: white;
-  padding: 20px;
+  padding: 20px 16px;
   transition: 0.4s ease;
   z-index: 999;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
@@ -193,24 +205,24 @@ header img {
   cursor: pointer;
 }
 
-/* CONTEÚDO CENTRAL */
+/* 🔥 CENTRALIZAÇÃO PERFEITA */
 #resumo,
 .carrinho input,
 .carrinho button {
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: block;
 }
 
 /* RESUMO */
 #resumo {
   text-align: center;
   white-space: pre-line;
-  width: 90%;
 }
 
 /* INPUT */
 .carrinho input {
-  width: 80%;
   padding: 10px;
   border-radius: 8px;
   border: none;
@@ -223,7 +235,6 @@ header img {
   background: #fbc304;
   border: none;
   padding: 14px;
-  width: 90%;
   color: #000;
   font-size: 16px;
   border-radius: 10px;
@@ -231,6 +242,7 @@ header img {
   font-weight: bold;
   cursor: pointer;
 }
+
 </style>
 </head>
 
