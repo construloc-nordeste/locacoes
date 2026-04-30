@@ -78,7 +78,7 @@ header img {
   cursor: pointer;
 }
 
-/* BOTÃO CARRINHO */
+/* BOTÃO FLUTUANTE */
 .btn-carrinho {
   position: fixed;
   bottom: 30px;
@@ -127,6 +127,25 @@ header img {
   bottom: 0;
 }
 
+/* TOPO DO CARRINHO */
+.topo-carrinho {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.fechar {
+  position: absolute;
+  right: 10px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* INPUT */
 .carrinho input {
   width: 80%;
   padding: 8px;
@@ -144,15 +163,6 @@ header img {
   font-size: 16px;
   border-radius: 8px;
   margin-top: 10px;
-}
-
-/* BOTÃO FECHAR */
-.fechar {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 22px;
-  cursor: pointer;
 }
 </style>
 </head>
@@ -173,7 +183,11 @@ header img {
 
 <!-- CARRINHO -->
 <div class="carrinho" id="carrinhoBox">
-  <div class="fechar" onclick="toggleCarrinho()">✕</div>
+
+  <div class="topo-carrinho">
+    🛒 Meu pedido
+    <span class="fechar" onclick="toggleCarrinho()">✕</span>
+  </div>
 
   <div id="resumo">Nenhum item selecionado</div>
 
@@ -249,7 +263,15 @@ function atualizar(){
 
 function toggleCarrinho(){
   let box = document.getElementById("carrinhoBox");
+  let btn = document.querySelector(".btn-carrinho");
+
   box.classList.toggle("ativo");
+
+  if(box.classList.contains("ativo")){
+    btn.style.display = "none";
+  } else {
+    btn.style.display = "flex";
+  }
 }
 
 function finalizar(){
