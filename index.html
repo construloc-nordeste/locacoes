@@ -6,7 +6,7 @@
 
 <title>Construloc Nordeste</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
 body {
@@ -45,7 +45,6 @@ header img {
   flex-direction: column;
 }
 
-/* IMAGEM */
 .card img {
   width: 100%;
   height: 160px;
@@ -53,18 +52,15 @@ header img {
   padding: 10px;
 }
 
-/* INFO */
 .info {
   padding: 10px;
   text-align: center;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
 }
 
-/* TÍTULO */
 .card h3 {
   font-size: 14px;
   margin-bottom: 8px;
@@ -72,13 +68,11 @@ header img {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
 }
 
-/* + - */
+/* QTD */
 .qtd {
   display: flex;
-  align-items: center;
   justify-content: center;
   gap: 10px;
 }
@@ -89,12 +83,8 @@ header img {
   border: none;
   background: #fbc304;
   font-weight: bold;
-  cursor: pointer;
   border-radius: 5px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  cursor: pointer;
 }
 
 .qtd span {
@@ -110,7 +100,6 @@ header img {
   width: 100%;
   font-weight: bold;
   cursor: pointer;
-  margin-top: auto;
 }
 
 /* BOTÃO CARRINHO */
@@ -119,15 +108,12 @@ header img {
   bottom: 30px;
   right: 20px;
   background: #fbc304;
-  color: #000;
   padding: 14px;
   border-radius: 50%;
   font-size: 20px;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  z-index: 999;
-
-  transition: 0.2s;
+  z-index: 1001;
 }
 
 /* CONTADOR */
@@ -146,25 +132,45 @@ header img {
   justify-content: center;
 }
 
+/* OVERLAY */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 998;
+}
+
+.overlay.ativo {
+  opacity: 1;
+  pointer-events: all;
+}
+
 /* CARRINHO */
 .carrinho {
   position: fixed;
   bottom: -100%;
   left: 0;
   width: 100%;
-  min-height: 45%;
+  min-height: 50%;
   background: #818286;
   color: white;
-  padding: 45px 20px 20px 20px;
-  transition: 0.35s ease;
-  z-index: 998;
+  padding: 20px;
+  transition: 0.4s ease;
+  z-index: 999;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
-/* ABRIR */
 .carrinho.ativo {
   bottom: 0;
 }
@@ -179,14 +185,20 @@ header img {
   position: relative;
 }
 
-/* X */
 .fechar {
   position: absolute;
-  right: 20px; /* ajuste leve para esquerda */
-  top: 50%;
-  transform: translateY(-50%);
+  right: 10px;
+  top: 0;
   font-size: 28px;
   cursor: pointer;
+}
+
+/* CONTEÚDO CENTRAL */
+#resumo,
+.carrinho input,
+.carrinho button {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* RESUMO */
@@ -194,36 +206,30 @@ header img {
   text-align: center;
   white-space: pre-line;
   width: 90%;
-  transform: translateX(-5px); /* leve ajuste como você pediu */
 }
 
-/* DIAS */
+/* INPUT */
 .carrinho input {
   width: 80%;
-  padding: 8px;
-  border-radius: 6px;
+  padding: 10px;
+  border-radius: 8px;
   border: none;
   margin-top: 8px;
   text-align: center;
-  transform: translateX(-5px);
 }
 
 /* BOTÃO FINAL */
 .carrinho button {
   background: #fbc304;
   border: none;
-  padding: 12px;
+  padding: 14px;
   width: 90%;
   color: #000;
   font-size: 16px;
-  border-radius: 8px;
-  margin-top: 10px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  transform: translateX(-5px);
+  border-radius: 10px;
+  margin-top: 12px;
+  font-weight: bold;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -236,15 +242,14 @@ header img {
 
 <div class="container" id="produtos"></div>
 
-<!-- BOTÃO CARRINHO -->
 <div class="btn-carrinho" id="btnCarrinho" onclick="toggleCarrinho()">
   🛒
   <span id="contador">0</span>
 </div>
 
-<!-- CARRINHO -->
-<div class="carrinho" id="carrinhoBox">
+<div class="overlay" id="overlay" onclick="toggleCarrinho()"></div>
 
+<div class="carrinho" id="carrinhoBox">
   <div class="topo-carrinho">
     Meu pedido
     <span class="fechar" onclick="toggleCarrinho()">✕</span>
@@ -252,7 +257,7 @@ header img {
 
   <div id="resumo">Nenhum item selecionado</div>
 
-  <div style="margin-top:8px;">Quantidade de dias</div>
+  <div style="margin-top:10px;">Quantidade de dias</div>
   <input type="number" id="dias" placeholder="Ex: 3">
 
   <button onclick="finalizar()">Finalizar no WhatsApp</button>
@@ -274,7 +279,6 @@ let produtos = [
 
 let carrinho = {};
 let qtds = {};
-
 let container = document.getElementById("produtos");
 
 produtos.forEach(p => {
@@ -315,7 +319,6 @@ function add(id, nome){
     alert("Adicione quantidade");
     return;
   }
-
   carrinho[nome] = qtds[id];
   atualizar();
 }
@@ -343,9 +346,11 @@ function atualizar(){
 
 function toggleCarrinho(){
   let box = document.getElementById("carrinhoBox");
+  let overlay = document.getElementById("overlay");
   let btn = document.getElementById("btnCarrinho");
 
   box.classList.toggle("ativo");
+  overlay.classList.toggle("ativo");
 
   if(box.classList.contains("ativo")){
     btn.style.opacity = "0";
