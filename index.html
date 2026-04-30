@@ -97,6 +97,7 @@ header img {
   gap: 10px;
 }
 
+/* BOTÕES + - */
 .qtd button {
   width: 28px;
   height: 28px;
@@ -110,13 +111,18 @@ header img {
   justify-content: center;
 }
 
-.qtd span {
-  min-width: 20px;
+/* INPUT DIGITAR */
+.qtd input {
+  width: 45px;
+  height: 28px;
   text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
 /* BOTÃO CARD */
-.card button {
+.card button:last-child {
   background: #fbc304;
   padding: 12px;
   width: 100%;
@@ -314,7 +320,15 @@ produtos.forEach(p => {
 
         <div class="qtd">
           <button onclick="menos('${p.id}')">−</button>
-          <span id="qtd-${p.id}">0</span>
+
+          <input 
+            type="number" 
+            id="qtd-${p.id}" 
+            value="0" 
+            min="0"
+            oninput="digitar('${p.id}')"
+          >
+
           <button onclick="mais('${p.id}')">+</button>
         </div>
       </div>
@@ -326,14 +340,24 @@ produtos.forEach(p => {
 
 function mais(id){
   qtds[id]++;
-  document.getElementById("qtd-" + id).innerText = qtds[id];
+  document.getElementById("qtd-" + id).value = qtds[id];
 }
 
 function menos(id){
   if(qtds[id] > 0){
     qtds[id]--;
-    document.getElementById("qtd-" + id).innerText = qtds[id];
+    document.getElementById("qtd-" + id).value = qtds[id];
   }
+}
+
+function digitar(id){
+  let valor = document.getElementById("qtd-" + id).value;
+
+  if(valor < 0 || valor === ""){
+    valor = 0;
+  }
+
+  qtds[id] = parseInt(valor);
 }
 
 function add(id, nome){
