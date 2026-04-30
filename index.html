@@ -43,6 +43,7 @@ header img {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .card img {
@@ -76,15 +77,16 @@ header img {
   width: 100%;
   font-weight: bold;
   cursor: pointer;
+  margin-top: auto;
 }
 
-/* BOTÃO FLUTUANTE */
+/* BOTÃO CARRINHO */
 .btn-carrinho {
   position: fixed;
   bottom: 30px;
   right: 20px;
-  background: #25D366;
-  color: white;
+  background: #fbc304; /* COR DA LOGO */
+  color: #000;
   padding: 14px;
   border-radius: 50%;
   font-size: 20px;
@@ -98,7 +100,7 @@ header img {
   position: absolute;
   top: -5px;
   right: -5px;
-  background: red;
+  background: #818286;
   color: white;
   font-size: 12px;
   width: 20px;
@@ -117,7 +119,7 @@ header img {
   width: 100%;
   background: #818286;
   color: white;
-  padding: 20px;
+  padding: 35px 20px 20px 20px;
   text-align: center;
   transition: 0.3s;
   z-index: 998;
@@ -127,7 +129,7 @@ header img {
   bottom: 0;
 }
 
-/* TOPO DO CARRINHO */
+/* TOPO */
 .topo-carrinho {
   font-weight: bold;
   font-size: 18px;
@@ -140,9 +142,11 @@ header img {
 
 .fechar {
   position: absolute;
-  right: 10px;
-  font-size: 22px;
+  right: 15px;
+  top: 5px;
+  font-size: 26px;
   cursor: pointer;
+  padding: 5px;
 }
 
 /* INPUT */
@@ -155,11 +159,11 @@ header img {
 }
 
 .carrinho button {
-  background: #25D366;
+  background: #fbc304;
   border: none;
   padding: 12px;
   width: 90%;
-  color: white;
+  color: #000;
   font-size: 16px;
   border-radius: 8px;
   margin-top: 10px;
@@ -185,7 +189,7 @@ header img {
 <div class="carrinho" id="carrinhoBox">
 
   <div class="topo-carrinho">
-    🛒 Meu pedido
+    Meu pedido
     <span class="fechar" onclick="toggleCarrinho()">✕</span>
   </div>
 
@@ -263,15 +267,7 @@ function atualizar(){
 
 function toggleCarrinho(){
   let box = document.getElementById("carrinhoBox");
-  let btn = document.querySelector(".btn-carrinho");
-
   box.classList.toggle("ativo");
-
-  if(box.classList.contains("ativo")){
-    btn.style.display = "none";
-  } else {
-    btn.style.display = "flex";
-  }
 }
 
 function finalizar(){
