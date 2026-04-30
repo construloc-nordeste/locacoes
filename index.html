@@ -89,7 +89,7 @@ header img {
   justify-content: center;
 }
 
-/* 🔥 QUANTIDADE PERFEITA */
+/* 🔥 QUANTIDADE CORRIGIDA */
 .qtd {
   display: flex;
   justify-content: center;
@@ -97,31 +97,32 @@ header img {
   gap: 10px;
 }
 
-/* TODOS IGUAIS */
-.qtd button,
-.qtd input {
-  width: 40px;
-  height: 40px;
-}
-
-/* BOTÕES */
+/* BOTÕES + E - */
 .qtd button {
+  width: 28px;
+  height: 28px;
   background: #fbc304;
-  border-radius: 8px;
-  font-size: 18px;
+  border-radius: 5px;
   cursor: pointer;
+  border: none;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  flex: 0 0 28px;
 }
 
 /* INPUT */
 .qtd input {
+  width: 45px;
+  height: 28px;
   text-align: center;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+
+  flex: 0 0 45px;
 }
 
 /* BOTÃO CARD */
